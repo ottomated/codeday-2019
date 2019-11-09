@@ -4,7 +4,8 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 
-var directionIndicator
+var direction_indicator
+var dash_hitbox
 
 export var speed = 400
 export var dash_distance = 200
@@ -18,7 +19,8 @@ var direction
 func _ready():
 	time_to_dash = 0.0
 	screen_size = get_viewport_rect().size
-	directionIndicator = get_node("Direction Indicator")
+	direction_indicator = get_node("Direction Indicator")
+	dash_hitbox = get_node("Dash Hitbox")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -46,11 +48,13 @@ func _input(event):
 func get_direction():
 	var mouse_position = get_viewport().get_mouse_position()
 	direction = (mouse_position - position)
-	directionIndicator.position = 5*sqrt(direction.length())*direction.normalized()
+	direction_indicator.position = 5*sqrt(direction.length())*direction.normalized()
 	direction = direction.normalized()
-	
+	dash_hitbox.position = 100*direction
+	dash_hitbox.rotation = direction.angle()
 	
 func dash():
 	move_and_collide(dash_distance*direction, true)
 	time_to_dash = dash_cooldown
+	
 	pass

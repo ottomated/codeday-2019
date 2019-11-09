@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://images/player.png" type="Texture" id=2]
 [ext_resource path="res://images/pointer.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 100, 30 )
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 15.6906, 13.3661 )
@@ -24,3 +27,9 @@ texture = ExtResource( 2 )
 [node name="Direction Indicator" type="Sprite" parent="."]
 position = Vector2( -15.6906, -13.3661 )
 texture = ExtResource( 3 )
+
+[node name="Dash Hitbox" type="Area2D" parent="."]
+position = Vector2( 100, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Dash Hitbox"]
+shape = SubResource( 2 )
