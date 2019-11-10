@@ -7,6 +7,7 @@ extends Node2D
 var ws
 
 var player_controller
+var trap_controller
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,7 +17,9 @@ func _ready():
 	ws.get_peer(1).set_write_mode(WebSocketPeer.WRITE_MODE_TEXT)
 	
 	player_controller = get_node("PlayerController")
+	trap_controller = get_node("TrapController")
 	player_controller.ws = ws
+	trap_controller.ws = ws
 	
 func packet():
 	var string = ws.get_peer(1).get_packet().get_string_from_utf8()
@@ -27,6 +30,7 @@ func packet():
 	match json["type"]:
 		"initialize":
 			player_controller.initialize(json["players"])
+			trap_controller.initialize(json["traps"])
 		"add_player":
 			player_controller.add_player(json)
 		"set_player_local":
@@ -39,6 +43,8 @@ func packet():
 			player_controller.update_player_health(json)
 		"player_dash":
 			player_controller.player_dash(json)
+		"add_trap":
+			trap_controller.add_trap(json)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

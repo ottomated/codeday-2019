@@ -17,7 +17,7 @@ func _ready():
 	
 func initialize(players):
 	for player in players:
-		add_player(player);
+		add_player(player)
 
 func add_player(json):
 	var player = player_scene.instance()

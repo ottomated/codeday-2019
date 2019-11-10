@@ -4,6 +4,8 @@ extends Area2D
 # var a = 2
 # var b = "text"
 
+signal trap_dissipated
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -11,6 +13,7 @@ func _ready():
 func initialize(position_vector, radian_rotation):
 	position = position_vector
 	rotation = radian_rotation
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
