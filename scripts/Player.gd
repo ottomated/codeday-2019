@@ -51,6 +51,9 @@ func initialize(player_controller, id):
 func declare_local():
 	var camera = Camera2D.new()
 	add_child(camera)
+	camera.make_current()
+	camera.set_h_drag_enabled(false)
+	camera.set_v_drag_enabled(false)
 	is_local = true
 	direction_indicator.show()
 	
