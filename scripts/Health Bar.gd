@@ -16,6 +16,7 @@ func heal():
 	pass
 
 func hurt():
+	get_parent().damage_indicator.play()
 	return set_health(health - 1)
 	pass
 	

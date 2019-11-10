@@ -17,6 +17,7 @@ var dash_hitbox_particle_emitter
 var dash_hitbox_particles
 var health_bar
 var player_controller
+var damage_indicator
 
 export var speed = 400
 export var dash_distance = 250
@@ -41,8 +42,9 @@ func _ready():
 	dash_hitbox_particles = dash_hitbox_particle_emitter.get_process_material()
 	direction_indicator.set_texture(direction_indicator_ready_texture)
 	health_bar = get_node("Health Bar")
-	
+	damage_indicator = get_node("Damage Indicator")
 	direction_indicator.hide()
+	damage_indicator.hide()
 	
 func initialize(player_controller, id):
 	self.player_controller = player_controller
@@ -54,6 +56,8 @@ func declare_local():
 	camera.make_current()
 	camera.set_h_drag_enabled(false)
 	camera.set_v_drag_enabled(false)
+	damage_indicator.rect_size = 1.1*screen_size
+	damage_indicator.rect_position = -1.05*screen_size/2
 	is_local = true
 	direction_indicator.show()
 	
