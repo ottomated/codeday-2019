@@ -4,13 +4,17 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 
+signal player_attack
+
 var direction_indicator
 var dash_hitbox
 var dash_hitbox_shape
 
 export var speed = 400
-export var dash_distance = 200
+export var dash_distance = 250
 export var dash_cooldown = 2.0
+export var dash_stall = 0.1
+export var damage = 10
 
 var initial_position
 var time_to_dash
@@ -28,17 +32,18 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var velocity = Vector2()  # The player's movement vector.
-	if Input.is_action_pressed("ui_right"):
-		velocity.x += 1
-	if Input.is_action_pressed("ui_left"):
-		velocity.x -= 1
-	if Input.is_action_pressed("ui_down"):
-		velocity.y += 1
-	if Input.is_action_pressed("ui_up"):
-		velocity.y -= 1
-	velocity = velocity.normalized() * speed
-	move_and_collide(velocity*delta, true)
+	if(time_to_dash < dash_cooldown-dash_stall): # if player just dashed, stall for a second - makes dash feel more powerful
+		var velocity = Vector2()  # The player's movement vector.
+		if Input.is_action_pressed("ui_right"):
+			velocity.x += 1
+		if Input.is_action_pressed("ui_left"):
+			velocity.x -= 1
+		if Input.is_action_pressed("ui_down"):
+			velocity.y += 1
+		if Input.is_action_pressed("ui_up"):
+			velocity.y -= 1
+		velocity = velocity.normalized() * speed
+		move_and_collide(velocity*delta, true)
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 	if(time_to_dash == dash_cooldown):
@@ -67,5 +72,6 @@ func dash_followup():
 	var rectangle_dimensions = Vector2(distance_traveled, 60)
 	dash_hitbox_shape.set_extents(rectangle_dimensions/2)
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
+	emit_signal("player_attack", dash_hitbox, damage) 
 	#hitbox is correct shape, size, and position here: add signaling
 	
