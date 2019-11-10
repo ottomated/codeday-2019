@@ -26,7 +26,6 @@ func add_player(json):
 	players[json["id"]] = player
 	player.health_bar.set_health(json["health"])
 	var color_array = json["color"]
-	print(color_array)
 	player.get_node("Sprite").modulate = (Color(color_array[0]/255, color_array[1]/255, color_array[2]/255))
 	var position_array = json["position"]
 	player.position = Vector2(position_array[0], position_array[1])
@@ -45,12 +44,8 @@ func update_player_pos(json):
 	player.position = Vector2(position_array[0], position_array[1])
 	
 func update_player_health(json):
-	var player = players[json["d"]]
-	var heal = json["health_up"] # if false, then player is being hurt
-	if(heal):
-		player.health_bar.heal()
-	else:
-		player.health_bar.hurt()
+	var player = players[json["id"]]
+	player.health_bar.set_health(json["health"])
 	
 func player_dash(json):
 	var player = players[json["id"]]
@@ -60,6 +55,12 @@ func player_dash(json):
 	
 func send_position(player):
 	ws.get_peer(1).put_packet(JSON.print({"type": "player_move", "id": player.id, "position": [player.position.x, player.position.y]}).to_utf8())
+	
+#triggered when local player overlaps a damage-dealing area
+func test_local_player_overlap(player):
+	if player.get_type() == "Player" && player.id == local_id:
+		player.health_bar.hurt()
+		ws.get_peer(1).put_packet(JSON.print({"type": "player_damage", "id": player.id, "health": player.health_bar.health}).to_utf8())
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

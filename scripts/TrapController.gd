@@ -4,11 +4,10 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-var ws
-
 var traps
 
 var wall_trap_scene = preload("res://Wall_Trap.tscn")
+var spike_trap_scene = preload("res://Spike_Trap.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,7 +23,8 @@ func add_trap(json):
 		"wall":
 			trap = wall_trap_scene.instance()
 		"spike":
-			pass
+			trap = spike_trap_scene.instance()
+			trap.connect("body_entered", get_parent().get_node("PlayerController"), "test_local_player_overlap")
 	traps[json["id"]] = trap
 	add_child(trap)
 	trap.initialize(json["position"])

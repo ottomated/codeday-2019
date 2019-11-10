@@ -19,7 +19,6 @@ func _ready():
 	player_controller = get_node("PlayerController")
 	trap_controller = get_node("TrapController")
 	player_controller.ws = ws
-	trap_controller.ws = ws
 	
 func packet():
 	var string = ws.get_peer(1).get_packet().get_string_from_utf8()
