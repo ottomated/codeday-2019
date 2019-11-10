@@ -55,6 +55,9 @@ func player_dash(json):
 	
 func send_position(player):
 	ws.get_peer(1).put_packet(JSON.print({"type": "player_move", "id": player.id, "position": [player.position.x, player.position.y]}).to_utf8())
+
+func send_dash(player):
+	ws.get_peer(1).put_packet(JSON.print({"type": "player_dash", "id": player.id, "direction": [player.direction.x, player.direction.y]}).to_utf8())
 	
 #triggered when local player overlaps a damage-dealing area
 func test_local_player_overlap(player):

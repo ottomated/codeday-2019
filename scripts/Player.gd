@@ -112,5 +112,6 @@ func dash_followup():
 	dash_hitbox_particles.set_emission_box_extents(Vector3(rectangle_dimensions.x, rectangle_dimensions.y-20, 2)/2)
 	dash_hitbox_particle_emitter.emitting = true;
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
-	emit_signal("player_attack", dash_hitbox, damage)
+	if(is_local):
+		player_controller.send_dash(self)
 	#hitbox is correct shape, size, and position here: add signaling
