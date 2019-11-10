@@ -8,6 +8,7 @@ var ws
 
 var player_controller
 var trap_controller
+var enemy_controller
 
 var Maze = load("res://scripts/Maze.gd");
 
