@@ -12,7 +12,7 @@ var tile_size = 64  # tile size (in pixels)
 var width = 80  # width of map (in tiles)
 var height = 80  # height of map (in tiles)
 
-var map_seed = randi()
+var map_seed = 321789
 
 # list of enemy spawn points
 var enemy_spawn_list = []
@@ -41,6 +41,15 @@ func _ready():
 	var exit_pos = make_exit()
 	print(exit_pos)
 	$TileMap/Exit.set_pos(exit_pos, tile_size)
+	generate_enemy_spawn_positions()
+	print(enemy_spawn_list)
+	print(enemy_spawn_list.size())
+	var sum = 0
+	for x in range(width):
+		for y in range(height):
+			if Map.get_cellv(Vector2(x,y)) != 15:
+				sum += 1
+	print(sum)
 	
 func check_neighbors(cell, unvisited):
 	# returns an array of cell's unvisited neighbors
@@ -178,7 +187,9 @@ func make_exit():
 		make_exit()
 	else:
 		return Vector2(x, y)
-	
-	
-	
-	
+
+func generate_enemy_spawn_positions():
+	for x in range(width):
+		for y in range(height):
+			if Map.get_cellv(Vector2(x, y)) != 15 and 4 > int(rand_range(0, 100)): # 4 = percentage of tiles that can spawn enemies
+				enemy_spawn_list.append(Vector2(x, y))
