@@ -41,11 +41,8 @@ func _init(m, s):
 	erase_walls()
 	create_rooms()
 	var exit_pos = make_exit()
-	print(exit_pos)
 	#Map.get_node("Exit").position = exit_pos * tile_size
 	generate_enemy_spawn_positions()
-	print(enemy_spawn_list)
-	print(enemy_spawn_list.size())
 	var sum = 0
 	polygons = [];
 	for x in range(width):
@@ -185,9 +182,6 @@ func make_exit():
 	else:
 		x = 1
 		y = perimeter - random
-	print(x)
-	print(y)
-	print(Map.get_cellv(Vector2(x, y)))
 	if Map.get_cellv(Vector2(x, y)) == 15:
 		make_exit()
 	else:

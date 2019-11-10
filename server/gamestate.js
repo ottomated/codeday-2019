@@ -1,14 +1,18 @@
 const Player = require('./player');
+const Enemy = require('./enemy');
 
 module.exports = class GameState {
 	constructor(ws) {
 		this.ws = ws;
 		this.players = [];
 		this.traps = [];
+		this.enemies = [];
 		this.seed = new Date().getTime();
 		this.nextPlayerColor = 0;
 		this.nextId = 0;
 		this.nextTrapId = 0;
+		this.nextEnemyId = 0;
+		this.spawnPoints = [[32, 32]];
 	}
 
 	getState() {
@@ -32,6 +36,19 @@ module.exports = class GameState {
 		}, trap.expiry);
 	}
 
+	spawnEnemy() {
+		let e = new Enemy(this.spawnPoints);
+		e.id = this.nextEnemyId;
+		this.nextEnemyId++;
+		this.enemies.push(e);
+		this.ws.clients.forEach(c => c.send(JSON.stringify({
+			type: "add_enemy",
+			id: e.id,
+			position: e.position
+		})));
+
+	}
+
 	removePlayer(player) {
 		delete this.players[player.id];
 		this.ws.clients.forEach(c => c.send(JSON.stringify({
@@ -40,8 +57,16 @@ module.exports = class GameState {
 		})));
 	}
 
+	removeEnemy(id) {
+		delete this.enemies[id];
+		this.ws.clients.forEach(c => c.send(JSON.stringify({
+			type: "remove_enemy",
+			id: id
+		})));
+	}
+
 	addPlayer() {
-		let player = new Player();
+		let player = new Player(this.spawnPoints);
 		player.id = this.nextId;
 		this.nextId++;
 		player.color = hslToRgb(this.nextPlayerColor / 360, .7, .7);

@@ -1,6 +1,6 @@
 module.exports = class Player {
-	constructor() {
-		this.position = [32, 32];
+	constructor(spawnPoints) {
+		this.position = spawnPoints[Math.floor(Math.random() * spawnPoints.length)].map(p => p * 64 + 32);
 		this.color;
 		this.id;
 		this.health = 3;
