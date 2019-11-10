@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://new_script.gd" type="Script" id=1]
 [ext_resource path="res://Tilesetbetter.tres" type="TileSet" id=2]
-[ext_resource path="res://Player.gd" type="Script" id=3]
-[ext_resource path="res://player.png" type="Texture" id=4]
+[ext_resource path="res://Exit.gd" type="Script" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://Player.gd" type="Script" id=5]
+[ext_resource path="res://Player.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -15,9 +17,22 @@ scale = Vector2( 0.15, 0.15 )
 tile_set = ExtResource( 2 )
 format = 1
 
-[node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 46.0336, 43.3391 )
+[node name="Exit" type="StaticBody2D" parent="TileMap"]
+scale = Vector2( 6.66667, 6.66667 )
 script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="TileMap/Exit"]
+modulate = Color( 0.603922, 0.572549, 0.788235, 1 )
+position = Vector2( 0, 7.62939e-06 )
+scale = Vector2( 0.85, 0.85 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 42.2609, 41.4143 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -26,8 +41,8 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Player"]
-position = Vector2( 0.0215263, 0.039459 )
-scale = Vector2( 0.311547, 0.310912 )
-texture = ExtResource( 4 )
+position = Vector2( 0.0170044, -0.00720298 )
+scale = Vector2( 0.486607, 0.511941 )
+texture = ExtResource( 6 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
