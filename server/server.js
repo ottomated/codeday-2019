@@ -43,6 +43,17 @@ wss.on('connection', function connection(ws, req) {
 						}
 					});
 					break;
+			case "player_dash":
+					wss.clients.forEach(c => {
+						if (c != ws) {
+							c.send(JSON.stringify({
+								type: "player_dash",
+								id: json.id,
+								direction: json.direction
+							}));
+						}
+					});
+					break;
 			case "add_trap":
 				let trap = new Trap(json.trap_type);
 				trap.position = json.position;
