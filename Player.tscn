@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://images/player.png" type="Texture" id=2]
@@ -6,26 +6,28 @@
 [ext_resource path="res://images/health_bar.png" type="Texture" id=4]
 [ext_resource path="res://scripts/Health Bar.gd" type="Script" id=5]
 [ext_resource path="res://images/health_dot.png" type="Texture" id=6]
+[ext_resource path="res://sfx/dash.wav" type="AudioStream" id=7]
+[ext_resource path="res://sfx/hit.wav" type="AudioStream" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 100, 30 )
 
-[sub_resource type="Gradient" id=4]
+[sub_resource type="Gradient" id=3]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=5]
-gradient = SubResource( 4 )
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
 
-[sub_resource type="Curve" id=6]
+[sub_resource type="Curve" id=5]
 max_value = 3.0
 _data = [ Vector2( 0, 3 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=7]
-curve = SubResource( 6 )
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=3]
+[sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 2
 emission_box_extents = Vector3( 100, 20, 1 )
 flag_disable_z = true
@@ -36,8 +38,8 @@ orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 linear_accel = -1.0
 scale_random = 1.0
-scale_curve = SubResource( 7 )
-color_ramp = SubResource( 5 )
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 16, 16 )
@@ -72,7 +74,7 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 0.8
 randomness = 0.5
-process_material = SubResource( 3 )
+process_material = SubResource( 7 )
 
 [node name="Health Bar" type="Sprite" parent="."]
 editor/display_folded = true
@@ -91,3 +93,9 @@ texture = ExtResource( 6 )
 [node name="Heart3" type="Sprite" parent="Health Bar"]
 texture = ExtResource( 6 )
 offset = Vector2( 10, 0 )
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
