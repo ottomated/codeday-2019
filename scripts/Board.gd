@@ -8,6 +8,7 @@ var ws
 
 var player_controller
 var trap_controller
+var enemy_controller
 
 var Maze = load("res://scripts/Maze.gd");
 
@@ -20,6 +21,8 @@ func _ready():
 	
 	player_controller = get_node("PlayerController")
 	trap_controller = get_node("TrapController")
+	enemy_controller = get_node("EnemyController")
+	
 	player_controller.ws = ws
 	
 func packet():
@@ -32,9 +35,12 @@ func packet():
 		"initialize":
 			player_controller.initialize(json["players"])
 			trap_controller.initialize(json["traps"])
+			enemy_controller.set_players(player_controller.players)
 			var maze = Maze.new($TileMap, json["seed"]);
+			ws.get_peer(1).put_packet(JSON.print({"type": "spawn_points", "points": maze.enemy_spawn_list}).to_utf8())
 		"add_player":
 			player_controller.add_player(json)
+			enemy_controller.set_players(player_controller.players)
 		"set_player_local":
 			player_controller.set_player_local(json)
 		"remove_player":
@@ -49,6 +55,10 @@ func packet():
 			trap_controller.add_trap(json)
 		"remove_trap":
 			trap_controller.remove_trap(json)
+		"add_enemy":
+			enemy_controller.add_enemy(json)
+		"remove_enemy":
+			enemy_controller.remove_enemy(json)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

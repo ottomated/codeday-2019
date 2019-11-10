@@ -80,7 +80,8 @@ wss.on('connection', function connection(ws, req) {
 						return l.split(', ').map(n => parseInt(n));
 					});
 					setInterval(() => {
-						if (state.enemies.length < 100) {
+						console.log(state.enemies.length + " enemies")
+						if (state.enemies.length < 1000) {
 							state.spawnEnemy();
 						}
 					}, 100);

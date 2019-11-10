@@ -80,6 +80,7 @@ shape = SubResource( 1 )
 
 [node name="Dash Hitbox" type="Area2D" parent="."]
 position = Vector2( 100, 0 )
+collision_layer = 3
 
 [node name="Dash Hitbox Shape" type="CollisionShape2D" parent="Dash Hitbox"]
 shape = SubResource( 2 )

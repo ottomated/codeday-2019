@@ -12,7 +12,7 @@ var tile_size = 64  # tile size (in pixels)
 var width = 80  # width of map (in tiles)
 var height = 80  # height of map (in tiles)
 
-var map_seed = 321789
+var map_seed = randi()
 
 # list of enemy spawn points
 var enemy_spawn_list = []
@@ -38,10 +38,12 @@ func _init(m, s):
 	print("Seed: ", map_seed)
 	tile_size = Map.cell_size
 	make_maze()
-	erase_walls()
+	#erase_walls()
 	create_rooms()
-	var exit_pos = make_exit()
-	#Map.get_node("Exit").position = exit_pos * tile_size
+	#var exit_pos = make_exit()
+	#print(exit_pos)
+	#Map.get_node("Exit").position = Vector2(40 * 64, 40 * 64)
+	#print(Map.get_node("Exit").position)
 	generate_enemy_spawn_positions()
 	var sum = 0
 	polygons = [];
@@ -166,6 +168,7 @@ func convert_to_pos(x, y, n):
 	return sum
 
 func make_exit():
+<<<<<<< HEAD
 	var perimeter = 2 * (width + height) - 4
 	var random = ((randi() % 89089) + 7986) % perimeter
 	var x = 0
@@ -186,6 +189,29 @@ func make_exit():
 		make_exit()
 	else:
 		return Vector2(x, y)
+#	var perimeter = 2 * (width + height) - 4
+#	var random = ((randi() % 89089) + 7986 + a) % perimeter
+#	var x = 0
+#	var y = 0
+#	if (random <= width):
+#		x = random
+#		y = 1
+#	elif (random <= width + height - 1):
+#		x = width
+#		y = random - width
+#	elif (random <= 2 * width + height - 2):
+#		x = perimeter - height - random
+#		y = height
+#	else:
+#		x = 1
+#		y = perimeter - random
+#	print(x)
+#	print(y)
+#	print(Map.get_cellv(Vector2(x, y)))
+#	if Map.get_cellv(Vector2(x, y)) == 15:
+#		make_exit(a+1)
+#	else:
+		return Vector2(40, 40)
 
 func generate_enemy_spawn_positions():
 	for x in range(width):
