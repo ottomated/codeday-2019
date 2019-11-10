@@ -38,7 +38,7 @@ func _process(delta):
 	if Input.is_action_pressed("ui_up"):
 		velocity.y -= 1
 	velocity = velocity.normalized() * speed
-	position += velocity * delta
+	move_and_collide(velocity*delta, true)
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
 	if(time_to_dash == dash_cooldown):
