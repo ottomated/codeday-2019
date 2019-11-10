@@ -12,7 +12,7 @@ var tile_size = 64  # tile size (in pixels)
 var width = 80  # width of map (in tiles)
 var height = 80  # height of map (in tiles)
 
-var map_seed = 321789
+var map_seed = randi()
 
 # list of enemy spawn points
 var enemy_spawn_list = []
@@ -42,7 +42,8 @@ func _init(m, s):
 	create_rooms()
 	var exit_pos = make_exit()
 	print(exit_pos)
-	#Map.get_node("Exit").position = exit_pos * tile_size
+	Map.get_node("Exit").position = exit_pos * tile_size
+	print(Map.get_node("Exit").position)
 	generate_enemy_spawn_positions()
 	var sum = 0
 	polygons = [];
