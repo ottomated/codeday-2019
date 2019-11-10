@@ -56,8 +56,10 @@ func player_dash(json):
 func send_position(player):
 	ws.get_peer(1).put_packet(JSON.print({"type": "player_move", "id": player.id, "position": [player.position.x, player.position.y]}).to_utf8())
 
-func send_dash(player):
+func send_dash(player, extra_overlaps):
 	var intersected = player.dash_hitbox.get_overlapping_bodies()
+	for i in extra_overlaps:
+		intersected.append(i)
 	var killed = []
 	for entity in intersected:
 		if(entity in get_parent().get_node("EnemyController").get_children()):

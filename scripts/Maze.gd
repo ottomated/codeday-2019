@@ -168,7 +168,6 @@ func convert_to_pos(x, y, n):
 	return sum
 
 func make_exit():
-<<<<<<< HEAD
 	var perimeter = 2 * (width + height) - 4
 	var random = ((randi() % 89089) + 7986) % perimeter
 	var x = 0

@@ -107,6 +107,7 @@ func dash():
 	$DashSound.play()
 	
 func dash_followup():
+	var overlapping_bodies_extra = dash_hitbox.get_overlapping_bodies()
 	var distance_traveled = (position - initial_position).length()
 	dash_hitbox.rotation = (position - initial_position).angle()
 	var rectangle_dimensions = Vector2(distance_traveled, 60)
@@ -115,7 +116,7 @@ func dash_followup():
 	dash_hitbox_particle_emitter.emitting = true;
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
 	if(is_local):
-		player_controller.send_dash(self)
+		player_controller.send_dash(self, overlapping_bodies_extra)
 		print(dash_hitbox.get_overlapping_bodies())
 	if (distance_traveled+2 < dash_distance):
 		dash_collision_particles.global_position = global_position
