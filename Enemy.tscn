@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 200.0
+radius = 20.0
 
 [node name="Enemy" type="KinematicBody2D"]
 script = ExtResource( 1 )
@@ -17,4 +17,10 @@ shape = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection Radius"]
 shape = SubResource( 2 )
+
+[node name="Damage Radius" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Damage Radius"]
+shape = SubResource( 2 )
 [connection signal="body_entered" from="Detection Radius" to="." method="_on_Detection_Radius_body_entered"]
+[connection signal="body_entered" from="Damage Radius" to="." method="_on_Detection_Radius_body_entered"]

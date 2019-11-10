@@ -23,9 +23,11 @@ func set_players(players):
 
 func add_enemy(json):
 	var enemy = enemy_scene.instance()
+	enemy.connect("body_entered", get_parent().get_node("PlayerController"), "test_local_player_overlap")
 	add_child(enemy)
 	enemy.all_player_list = players
 	enemies[json["id"]] = enemy
+	enemy.id = json["id"]
 	var position_array = json["position"]
 	enemy.position = Vector2(position_array[0], position_array[1])
 	
