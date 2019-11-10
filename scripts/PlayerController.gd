@@ -12,39 +12,43 @@ var local_id
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	players = {}
+	
+func initalize(players):
+	for player in players:
+		add_player(player);
 
-func add_player(var json):
+func add_player(json):
 	var player = player_scene.instance()
 	add_child(player)
-	players[json["player_id"]] = player
-	player.health_bar.set_health(json["player_health"])
-	var position_array = json["player_pos"]
+	players[json["id"]] = player
+	player.health_bar.set_health(json["health"])
+	var position_array = json["pos"]
 	player.position = Vector2(position_array[0], position_array[1])
 	
-func set_player_local(var json):
-	local_id = json["player_id"]
+func set_player_local(json):
+	local_id = json["id"]
 	players[local_id].declare_local()
 
-func remove_player(var json):
-	var player = players[json["player_id"]]
+func remove_player(json):
+	var player = players[json["id"]]
 	player.queue_free()
 	
-func update_player_pos(var json):
-	var player = players[json["player_id"]]
-	var position_array = json["player_pos"]
+func update_player_pos(json):
+	var player = players[json["id"]]
+	var position_array = json["pos"]
 	player.position = Vector2(position_array[0], position_array[1])
 	
-func update_player_health(var json):
-	var player = players[json["player_id"]]
+func update_player_health(json):
+	var player = players[json["d"]]
 	var heal = json["health_up"] # if false, then player is being hurt
 	if(heal):
 		player.health_bar.heal()
 	else:
 		player.health_bar.hurt()
 	
-func player_dash(var json):
-	var player = players[json["player_id"]]
-	var direction_array = json["player_direction"]
+func player_dash(json):
+	var player = players[json["id"]]
+	var direction_array = json["direction"]
 	player.direction = Vector2(direction_array[0], direction_array[1])
 	player.dash()
 	
