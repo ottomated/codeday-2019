@@ -6,6 +6,8 @@ extends KinematicBody2D
 
 signal player_attack
 
+var is_local = false
+
 var direction_indicator_ready_texture = preload("res://images/pointer_ready.png")
 var direction_indicator_unready_texture = preload("res://images/pointer.png")
 var direction_indicator
@@ -37,10 +39,15 @@ func _ready():
 	dash_hitbox_particles = dash_hitbox_particle_emitter.get_process_material()
 	direction_indicator.set_texture(direction_indicator_ready_texture)
 	health_bar = get_node("Health Bar")
-
+	
+	direction_indicator.hide()
+	
+func declare_local():
+	is_local = true
+	direction_indicator.show()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if(time_to_dash < dash_cooldown-dash_stall): # if player just dashed, stall for a second - makes dash feel more powerful
+	if(is_local && time_to_dash < dash_cooldown-dash_stall): # if player just dashed, stall for a second - makes dash feel more powerful
 		var velocity = Vector2()  # The player's movement vector.
 		if Input.is_action_pressed("ui_right"):
 			velocity.x += 1
@@ -51,7 +58,7 @@ func _process(delta):
 		if Input.is_action_pressed("ui_up"):
 			velocity.y -= 1
 		velocity = velocity.normalized() * speed
-		move_and_collide(velocity*delta, true)
+		move_and_slide(velocity)
 	if(time_to_dash == dash_cooldown):
 		dash_followup()
 	time_to_dash -= delta
@@ -60,7 +67,7 @@ func _process(delta):
 		direction_indicator.set_texture(direction_indicator_ready_texture)
 	
 func _input(event):
-	if event is InputEventMouseButton && time_to_dash <= 0:
+	if is_local && event is InputEventMouseButton && time_to_dash <= 0:
 		dash()
 		
 func get_direction():
