@@ -4,7 +4,7 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
-var player_scene = preload("res://player.tscn")
+var player_scene = preload("res://Player.tscn")
 
 var players
 var local_id
