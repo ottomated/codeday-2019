@@ -11,6 +11,8 @@ var direction_indicator_unready_texture = preload("res://images/pointer.png")
 var direction_indicator
 var dash_hitbox
 var dash_hitbox_shape
+var dash_hitbox_particle_emitter
+var dash_hitbox_particles
 var health_bar
 
 export var speed = 400
@@ -31,6 +33,8 @@ func _ready():
 	direction_indicator = get_node("Direction Indicator")
 	dash_hitbox = get_node("Dash Hitbox")
 	dash_hitbox_shape = get_node("Dash Hitbox/Dash Hitbox Shape").get_shape()
+	dash_hitbox_particle_emitter = get_node("Dash Hitbox/Dash Particles")
+	dash_hitbox_particles = dash_hitbox_particle_emitter.get_process_material()
 	direction_indicator.set_texture(direction_indicator_ready_texture)
 	health_bar = get_node("Health Bar")
 
@@ -77,6 +81,8 @@ func dash_followup():
 	dash_hitbox.rotation = (position - initial_position).angle()
 	var rectangle_dimensions = Vector2(distance_traveled, 60)
 	dash_hitbox_shape.set_extents(rectangle_dimensions/2)
+	dash_hitbox_particles.set_emission_box_extents(Vector3(rectangle_dimensions.x, rectangle_dimensions.y-20, 2)/2)
+	dash_hitbox_particle_emitter.emitting = true;
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
 	emit_signal("player_attack", dash_hitbox, damage)
 	#hitbox is correct shape, size, and position here: add signaling
