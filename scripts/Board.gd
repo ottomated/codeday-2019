@@ -9,6 +9,8 @@ var ws
 var player_controller
 var trap_controller
 
+var Maze = load("res://scripts/Maze.gd");
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	ws = WebSocketClient.new()
@@ -30,6 +32,7 @@ func packet():
 		"initialize":
 			player_controller.initialize(json["players"])
 			trap_controller.initialize(json["traps"])
+			var maze = Maze.new($TileMap, json["seed"]);
 		"add_player":
 			player_controller.add_player(json)
 		"set_player_local":

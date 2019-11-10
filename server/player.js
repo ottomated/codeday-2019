@@ -1,6 +1,6 @@
 module.exports = class Player {
 	constructor() {
-		this.position = [0, 0];
+		this.position = [32, 32];
 		this.color;
 		this.id;
 		this.health = 3;
