@@ -13,7 +13,7 @@ var dash_hitbox_shape
 export var speed = 400
 export var dash_distance = 250
 export var dash_cooldown = 2.0
-export var dash_stall = 0.1
+export var dash_stall = 0.3
 export var damage = 10
 
 var initial_position
@@ -72,6 +72,6 @@ func dash_followup():
 	var rectangle_dimensions = Vector2(distance_traveled, 60)
 	dash_hitbox_shape.set_extents(rectangle_dimensions/2)
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
-	emit_signal("player_attack", dash_hitbox, damage) 
+	emit_signal("player_attack", dash_hitbox, damage)
 	#hitbox is correct shape, size, and position here: add signaling
 	
