@@ -2,6 +2,8 @@ extends KinematicBody2D
  
 const MOVE_SPEED = 200
 
+var id
+
 var all_player_list
 var near_player_list
  
