@@ -4,7 +4,9 @@
 
 [node name="Board" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
+[node name="PlayerController" type="Node2D" parent="."]
+
+[node name="Player" parent="PlayerController" instance=ExtResource( 1 )]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_right = 40.0
