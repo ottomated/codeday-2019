@@ -45,6 +45,8 @@ func packet():
 			player_controller.player_dash(json)
 		"add_trap":
 			trap_controller.add_trap(json)
+		"remove_trap":
+			trap_controller.remove_trap(json)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

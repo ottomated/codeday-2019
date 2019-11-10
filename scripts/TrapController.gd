@@ -6,11 +6,13 @@ extends Node2D
 
 var ws
 
+var traps
+
 var wall_trap_scene = preload("res://Wall_Trap.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	traps = {}
 	
 func initialize(traps):
 	for trap in traps:
@@ -23,8 +25,13 @@ func add_trap(json):
 			trap = wall_trap_scene.instance()
 		"spike":
 			pass
+	traps[json["id"]] = trap
 	add_child(trap)
-	trap.initialize(json["position"]. json["rotation"])
+	trap.initialize(json["position"])
+	
+func remove_trap(json):
+	var trap = traps[json["id"]]
+	trap.queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
