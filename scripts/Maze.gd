@@ -44,8 +44,6 @@ func _init(m, s):
 	print(exit_pos)
 	#Map.get_node("Exit").position = exit_pos * tile_size
 	generate_enemy_spawn_positions()
-	print(enemy_spawn_list)
-	print(enemy_spawn_list.size())
 	var sum = 0
 	polygons = [];
 	for x in range(width):

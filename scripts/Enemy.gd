@@ -1,13 +1,13 @@
 extends KinematicBody2D
  
 const MOVE_SPEED = 200
- 
-var alive = true
+
 var all_player_list
 var near_player_list
  
 func _ready():
 	pass
+	
  
 func _physics_process(delta):
     var vec_to_player = get_target()
