@@ -44,8 +44,6 @@ func _process(delta):
 			velocity.y -= 1
 		velocity = velocity.normalized() * speed
 		move_and_collide(velocity*delta, true)
-	position.x = clamp(position.x, 0, screen_size.x)
-	position.y = clamp(position.y, 0, screen_size.y)
 	if(time_to_dash == dash_cooldown):
 		dash_followup()
 	time_to_dash -= delta
@@ -56,7 +54,7 @@ func _input(event):
 		dash()
 		
 func get_direction():
-	var mouse_position = get_viewport().get_mouse_position()
+	var mouse_position = get_global_mouse_position()
 	direction = (mouse_position - position)
 	direction_indicator.position = 5*sqrt(direction.length())*direction.normalized()
 	direction = direction.normalized()
