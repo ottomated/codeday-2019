@@ -60,6 +60,7 @@ func send_position(player):
 func test_local_player_overlap(player):
 	if player in get_children() && player.id == local_id:
 		player.health_bar.hurt()
+		player.get_node("HitSound").play()
 		ws.get_peer(1).put_packet(JSON.print({"type": "player_damage", "id": player.id, "health": player.health_bar.health}).to_utf8())
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.

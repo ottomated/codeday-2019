@@ -102,6 +102,7 @@ func dash():
 	initial_position = position
 	move_and_collide(dash_distance*direction, true)
 	time_to_dash = dash_cooldown
+	$DashSound.play()
 	
 func dash_followup():
 	var distance_traveled = (position - initial_position).length()
