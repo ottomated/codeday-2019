@@ -32,7 +32,8 @@ func add_enemy(json):
 	enemy.position = Vector2(64*position_array[0]+32, 64*position_array[1]+32)
 	
 func remove_enemy(json):
-	enemies[json["id"]].queue_free()
+	if(enemies.has(json["id"])):	
+		enemies[json["id"]].queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

@@ -116,6 +116,7 @@ func dash_followup():
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
 	if(is_local):
 		player_controller.send_dash(self)
+		print(dash_hitbox.get_overlapping_bodies())
 	if (distance_traveled+2 < dash_distance):
 		dash_collision_particles.global_position = global_position
 		$HitSound.play();
