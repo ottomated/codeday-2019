@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scripts/Board.gd" type="Script" id=1]
 [ext_resource path="res://scripts/TrapController.gd" type="Script" id=2]
 [ext_resource path="res://scripts/PlayerController.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 20, 20 )
 
 [node name="Board" type="Node2D"]
 script = ExtResource( 1 )
@@ -12,3 +15,13 @@ script = ExtResource( 2 )
 
 [node name="PlayerController" type="Node2D" parent="."]
 script = ExtResource( 3 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 20, 20 )
+shape = SubResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
+margin_right = 40.0
+margin_bottom = 40.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://images/player.png" type="Texture" id=2]
@@ -42,6 +42,31 @@ scale_random = 1.0
 scale_curve = SubResource( 6 )
 color_ramp = SubResource( 4 )
 
+[sub_resource type="Gradient" id=9]
+colors = PoolColorArray( 0.399414, 0.399414, 0.399414, 1, 0.368164, 0.368164, 0.368164, 0 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="Curve" id=11]
+max_value = 5.0
+_data = [ Vector2( 0, 5 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.038 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=12]
+curve = SubResource( 11 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 5.0
+scale = 5.0
+scale_curve = SubResource( 12 )
+color_ramp = SubResource( 10 )
+
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 16, 16 )
 script = ExtResource( 1 )
@@ -51,15 +76,6 @@ __meta__ = {
 
 [node name="Player Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 1.25, 1.25 )
-texture = ExtResource( 2 )
-
-[node name="Direction Indicator" type="Sprite" parent="."]
-position = Vector2( -15.6906, -13.3661 )
-scale = Vector2( 1.5, 1.5 )
-texture = ExtResource( 3 )
 
 [node name="Dash Hitbox" type="Area2D" parent="."]
 position = Vector2( 100, 0 )
@@ -76,6 +92,27 @@ one_shot = true
 explosiveness = 0.8
 randomness = 0.5
 process_material = SubResource( 7 )
+
+[node name="Dash Collide Particles" type="Particles2D" parent="Dash Hitbox"]
+position = Vector2( 133.182, 3.37061 )
+emitting = false
+amount = 50
+lifetime = 0.5
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.6
+randomness = 0.5
+visibility_rect = Rect2( -100, -100, 50, 50 )
+process_material = SubResource( 8 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 1.25, 1.25 )
+texture = ExtResource( 2 )
+
+[node name="Direction Indicator" type="Sprite" parent="."]
+position = Vector2( -15.6906, -13.3661 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 3 )
 
 [node name="Health Bar" type="Sprite" parent="."]
 editor/display_folded = true
