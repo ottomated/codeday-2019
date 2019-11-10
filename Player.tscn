@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://images/player.png" type="Texture" id=2]
@@ -12,17 +12,35 @@
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 100, 30 )
 
+[sub_resource type="Gradient" id=4]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+
+[sub_resource type="Curve" id=6]
+max_value = 3.0
+_data = [ Vector2( 0, 3 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
 [sub_resource type="ParticlesMaterial" id=3]
 emission_shape = 2
 emission_box_extents = Vector3( 100, 20, 1 )
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = -100.0
+angular_velocity = 1.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
+linear_accel = -1.0
+scale_random = 1.0
+scale_curve = SubResource( 7 )
+color_ramp = SubResource( 5 )
 
 [node name="Player" type="KinematicBody2D"]
-position = Vector2( 15.6906, 13.3661 )
+position = Vector2( 16, 16 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -32,8 +50,7 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0.0215263, 0.039459 )
-scale = Vector2( 0.311547, 0.310912 )
+scale = Vector2( 1.25, 1.25 )
 texture = ExtResource( 2 )
 
 [node name="Direction Indicator" type="Sprite" parent="."]
@@ -50,14 +67,15 @@ shape = SubResource( 2 )
 [node name="Dash Particles" type="Particles2D" parent="Dash Hitbox"]
 position = Vector2( 10, 0 )
 emitting = false
-amount = 1000
-lifetime = 0.2
+amount = 100
+lifetime = 0.5
 one_shot = true
 explosiveness = 0.8
 randomness = 0.5
 process_material = SubResource( 3 )
 
 [node name="Health Bar" type="Sprite" parent="."]
+editor/display_folded = true
 position = Vector2( 0, 30 )
 scale = Vector2( 2.4, 2.4 )
 texture = ExtResource( 4 )

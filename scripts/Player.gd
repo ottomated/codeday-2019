@@ -77,6 +77,8 @@ func _process(delta):
 	get_direction()
 	if(time_to_dash <= 0):
 		direction_indicator.set_texture(direction_indicator_ready_texture)
+	else:
+		direction_indicator.scale = Vector2(1-time_to_dash / dash_cooldown, 1-time_to_dash / dash_cooldown) * 1.5
 	if(is_local):
 		player_controller.send_position(self);
 	
