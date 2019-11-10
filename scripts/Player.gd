@@ -16,6 +16,7 @@ var dash_hitbox_shape
 var dash_hitbox_particle_emitter
 var dash_hitbox_particles
 var health_bar
+var dash_collision_particles
 var player_controller
 var damage_indicator
 
@@ -39,6 +40,7 @@ func _ready():
 	dash_hitbox = get_node("Dash Hitbox")
 	dash_hitbox_shape = get_node("Dash Hitbox/Dash Hitbox Shape").get_shape()
 	dash_hitbox_particle_emitter = get_node("Dash Hitbox/Dash Particles")
+	dash_collision_particles = $"Dash Hitbox/Dash Collide Particles";
 	dash_hitbox_particles = dash_hitbox_particle_emitter.get_process_material()
 	direction_indicator.set_texture(direction_indicator_ready_texture)
 	health_bar = get_node("Health Bar")
@@ -114,4 +116,8 @@ func dash_followup():
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
 	if(is_local):
 		player_controller.send_dash(self)
+	if (distance_traveled < dash_distance):
+		dash_collision_particles.global_position = global_position
+		$HitSound.play();
+		dash_collision_particles.emitting = true;
 	#hitbox is correct shape, size, and position here: add signaling
