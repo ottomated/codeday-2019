@@ -23,7 +23,7 @@ func packet():
 		return;
 	json = json.result;
 	match json["type"]:
-		"initalize":
+		"initialize":
 			player_controller.initialize(json["players"])
 		"add_player":
 			player_controller.add_player(json)

@@ -13,7 +13,8 @@ var local_id
 func _ready():
 	players = {}
 	
-func initalize(players):
+func initialize(players):
+	
 	for player in players:
 		add_player(player);
 
