@@ -116,7 +116,7 @@ func dash_followup():
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
 	emit_signal("player_attack", dash_hitbox, damage)
 	if (distance_traveled < dash_distance):
-		dash_collision_particles.position = dash_hitbox_shape.get_extents().x*direction
+		dash_collision_particles.global_position = global_position
 		$HitSound.play();
 		dash_collision_particles.emitting = true;
 	#hitbox is correct shape, size, and position here: add signaling
