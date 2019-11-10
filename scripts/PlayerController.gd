@@ -58,7 +58,7 @@ func send_position(player):
 	
 #triggered when local player overlaps a damage-dealing area
 func test_local_player_overlap(player):
-	if player.get_type() == "Player" && player.id == local_id:
+	if player in get_children() && player.id == local_id:
 		player.health_bar.hurt()
 		ws.get_peer(1).put_packet(JSON.print({"type": "player_damage", "id": player.id, "health": player.health_bar.health}).to_utf8())
 	
