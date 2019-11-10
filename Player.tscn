@@ -57,11 +57,6 @@ explosiveness = 0.8
 randomness = 0.5
 process_material = SubResource( 3 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-drag_margin_h_enabled = false
-drag_margin_v_enabled = false
-
 [node name="Health Bar" type="Sprite" parent="."]
 position = Vector2( 0, 30 )
 scale = Vector2( 2.4, 2.4 )
