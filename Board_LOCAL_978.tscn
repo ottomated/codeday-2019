@@ -22,8 +22,8 @@ format = 1
 script = ExtResource( 3 )
 
 [node name="icon" type="Sprite" parent="TileMap/Exit"]
-position = Vector2( 26.6446, 27.1432 )
-scale = Vector2( 0.461692, 0.470589 )
+position = Vector2( 21.9466, 22.4452 )
+scale = Vector2( 0.679684, 0.688582 )
 texture = ExtResource( 4 )
 
 [node name="TrapController" type="Node2D" parent="."]
