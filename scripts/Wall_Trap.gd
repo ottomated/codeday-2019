@@ -10,7 +10,7 @@ func _ready():
 
 func initialize(position_array):
 	position = Vector2(position_array[0], position_array[1])
-	
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

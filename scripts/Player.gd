@@ -116,7 +116,7 @@ func dash_followup():
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
 	if(is_local):
 		player_controller.send_dash(self)
-	if (distance_traveled < dash_distance):
+	if (distance_traveled+2 < dash_distance):
 		dash_collision_particles.global_position = global_position
 		$HitSound.play();
 		dash_collision_particles.emitting = true;
