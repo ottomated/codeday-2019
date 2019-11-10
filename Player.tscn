@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://images/player.png" type="Texture" id=2]
 [ext_resource path="res://images/pointer.png" type="Texture" id=3]
+[ext_resource path="res://images/health_bar.png" type="Texture" id=4]
+[ext_resource path="res://scripts/Health Bar.gd" type="Script" id=5]
+[ext_resource path="res://images/health_dot.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -26,6 +29,7 @@ texture = ExtResource( 2 )
 
 [node name="Direction Indicator" type="Sprite" parent="."]
 position = Vector2( -15.6906, -13.3661 )
+scale = Vector2( 1.5, 1.5 )
 texture = ExtResource( 3 )
 
 [node name="Dash Hitbox" type="Area2D" parent="."]
@@ -38,3 +42,20 @@ shape = SubResource( 2 )
 current = true
 drag_margin_h_enabled = false
 drag_margin_v_enabled = false
+
+[node name="Health Bar" type="Sprite" parent="."]
+position = Vector2( 0, 30 )
+scale = Vector2( 2.4, 2.4 )
+texture = ExtResource( 4 )
+script = ExtResource( 5 )
+
+[node name="Heart1" type="Sprite" parent="Health Bar"]
+texture = ExtResource( 6 )
+offset = Vector2( -10, 0 )
+
+[node name="Heart2" type="Sprite" parent="Health Bar"]
+texture = ExtResource( 6 )
+
+[node name="Heart3" type="Sprite" parent="Health Bar"]
+texture = ExtResource( 6 )
+offset = Vector2( 10, 0 )
