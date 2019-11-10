@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Enemy.gd" type="Script" id=1]
+[ext_resource path="res://images/2 - Enemy.png" type="Texture" id=2]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 30.0
+
+[node name="Board" type="Node2D"]
+
+[node name="PlayerController" type="Node2D" parent="."]
+
+[node name="enemy" type="KinematicBody2D" parent="PlayerController"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerController/enemy"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="PlayerController/enemy"]
+texture = ExtResource( 2 )
+
+[node name="Player" parent="PlayerController" instance=ExtResource( 3 )]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
