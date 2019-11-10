@@ -6,11 +6,13 @@ extends KinematicBody2D
 
 var direction_indicator
 var dash_hitbox
+var dash_hitbox_shape
 
 export var speed = 400
 export var dash_distance = 200
 export var dash_cooldown = 2.0
 
+var initial_position
 var time_to_dash
 var screen_size
 var direction
@@ -21,6 +23,8 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	direction_indicator = get_node("Direction Indicator")
 	dash_hitbox = get_node("Dash Hitbox")
+	dash_hitbox_shape = get_node("Dash Hitbox/Dash Hitbox Shape").get_shape()
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -37,8 +41,9 @@ func _process(delta):
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screen_size.x)
 	position.y = clamp(position.y, 0, screen_size.y)
+	if(time_to_dash == dash_cooldown):
+		dash_followup()
 	time_to_dash -= delta
-	print(time_to_dash)
 	get_direction()
 	
 func _input(event):
@@ -50,11 +55,17 @@ func get_direction():
 	direction = (mouse_position - position)
 	direction_indicator.position = 5*sqrt(direction.length())*direction.normalized()
 	direction = direction.normalized()
-	dash_hitbox.position = 100*direction
-	dash_hitbox.rotation = direction.angle()
 	
 func dash():
+	initial_position = position
 	move_and_collide(dash_distance*direction, true)
 	time_to_dash = dash_cooldown
 	
-	pass
+func dash_followup():
+	var distance_traveled = (position - initial_position).length()
+	dash_hitbox.rotation = (position - initial_position).angle()
+	var rectangle_dimensions = Vector2(distance_traveled, 60)
+	dash_hitbox_shape.set_extents(rectangle_dimensions/2)
+	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
+	#hitbox is correct shape, size, and position here: add signaling
+	

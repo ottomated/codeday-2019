@@ -16,7 +16,7 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Player Hitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -31,5 +31,5 @@ texture = ExtResource( 3 )
 [node name="Dash Hitbox" type="Area2D" parent="."]
 position = Vector2( 100, 0 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Dash Hitbox"]
+[node name="Dash Hitbox Shape" type="CollisionShape2D" parent="Dash Hitbox"]
 shape = SubResource( 2 )
