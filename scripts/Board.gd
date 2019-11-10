@@ -12,9 +12,11 @@ var player_controller
 func _ready():
 	ws = WebSocketClient.new()
 	ws.connect("data_received", self, "packet")
-	ws.connect_to_url("ws://192.168.1.47:8080")
+	ws.connect_to_url("ws://192.168.2.43:8080")
+	ws.get_peer(1).set_write_mode(WebSocketPeer.WRITE_MODE_TEXT)
 	
 	player_controller = get_node("PlayerController")
+	player_controller.ws = ws
 	
 func packet():
 	var string = ws.get_peer(1).get_packet().get_string_from_utf8()

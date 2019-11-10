@@ -16,6 +16,7 @@ var dash_hitbox_shape
 var dash_hitbox_particle_emitter
 var dash_hitbox_particles
 var health_bar
+var player_controller
 
 export var speed = 400
 export var dash_distance = 250
@@ -23,6 +24,7 @@ export var dash_cooldown = 2.0
 export var dash_stall = 0.3
 export var damage = 10
 
+var id
 var initial_position
 var time_to_dash
 var screen_size
@@ -42,9 +44,14 @@ func _ready():
 	
 	direction_indicator.hide()
 	
+func initialize(player_controller, id):
+	self.player_controller = player_controller
+	self.id = id
+
 func declare_local():
 	is_local = true
 	direction_indicator.show()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if(is_local && time_to_dash < dash_cooldown-dash_stall): # if player just dashed, stall for a second - makes dash feel more powerful
@@ -65,6 +72,8 @@ func _process(delta):
 	get_direction()
 	if(time_to_dash <= 0):
 		direction_indicator.set_texture(direction_indicator_ready_texture)
+	if(is_local):
+		player_controller.send_position(self);
 	
 func _input(event):
 	if is_local && event is InputEventMouseButton && time_to_dash <= 0:

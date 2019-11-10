@@ -4,6 +4,8 @@ extends Node2D
 # var a = 2
 # var b = "text"
 
+var ws
+
 var player_scene = preload("res://Player.tscn")
 
 var players
@@ -14,16 +16,16 @@ func _ready():
 	players = {}
 	
 func initialize(players):
-	
 	for player in players:
 		add_player(player);
 
 func add_player(json):
 	var player = player_scene.instance()
 	add_child(player)
+	player.initialize(self, json["id"])
 	players[json["id"]] = player
 	player.health_bar.set_health(json["health"])
-	var position_array = json["pos"]
+	var position_array = json["position"]
 	player.position = Vector2(position_array[0], position_array[1])
 	
 func set_player_local(json):
@@ -36,7 +38,7 @@ func remove_player(json):
 	
 func update_player_pos(json):
 	var player = players[json["id"]]
-	var position_array = json["pos"]
+	var position_array = json["position"]
 	player.position = Vector2(position_array[0], position_array[1])
 	
 func update_player_health(json):
@@ -52,6 +54,9 @@ func player_dash(json):
 	var direction_array = json["direction"]
 	player.direction = Vector2(direction_array[0], direction_array[1])
 	player.dash()
+	
+func send_position(player):
+	ws.get_peer(1).put_packet(JSON.print({"type": "player_move", "id": player.id, "position": [player.position.x, player.position.y]}).to_utf8())
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
