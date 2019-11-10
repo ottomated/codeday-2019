@@ -6,7 +6,7 @@ extends Node2D
 
 var ws
 
-var enemy_scene = preload("res://Player.tscn")
+var enemy_scene = preload("res://Enemy.tscn")
 
 var enemies
 var players
@@ -18,18 +18,20 @@ func _ready():
 
 func set_players(players):
 	self.players = players
-	for enemy in enemies:
-		enemy.all_player_list = players
+	for i in enemies:
+		print(i)
+		enemies[i].all_player_list = players
 
 func add_enemy(json):
 	var enemy = enemy_scene.instance()
 	enemy.connect("body_entered", get_parent().get_node("PlayerController"), "test_local_player_overlap")
 	add_child(enemy)
-	enemy.all_player_list = players
+	print(players)
+	enemy.all_player_list = players.values()
 	enemies[json["id"]] = enemy
 	enemy.id = json["id"]
 	var position_array = json["position"]
-	enemy.position = Vector2(position_array[0], position_array[1])
+	enemy.position = Vector2(64*position_array[0], 64*position_array[1])
 	
 func remove_enemy(json):
 	enemies[json["id"]].queue_free()

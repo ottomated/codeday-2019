@@ -4,8 +4,8 @@ const MOVE_SPEED = 200
 
 var id
 
-var all_player_list
-var near_player_list
+var all_player_list = []
+var near_player_list = []
  
 func _ready():
 	pass
@@ -18,11 +18,11 @@ func _physics_process(delta):
     move_and_collide(vec_to_player * MOVE_SPEED * delta)
 
 func get_target():
-	if(near_player_list.length > 0):
+	if(near_player_list.size() > 0):
 		var target = near_player_list[0].position-position
 		for player in near_player_list:
 			var vec_to = player.position - position
-			if vec_to.length() < target.length:
+			if vec_to.length() < target.length():
 				target = vec_to
 		return target
 	else:
