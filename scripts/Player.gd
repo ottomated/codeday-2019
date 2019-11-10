@@ -107,8 +107,3 @@ func dash_followup():
 	dash_hitbox.position = -dash_hitbox_shape.get_extents().x*direction
 	emit_signal("player_attack", dash_hitbox, damage)
 	#hitbox is correct shape, size, and position here: add signaling
-
-func modulate(r, b, g):
-	get_node("Sprite").modulate(r, b, g)
-	get_node("Direction Indicatior").modulate(r, b, g)
-	get_node("Health Bar").modulate(r, b, g)

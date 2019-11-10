@@ -26,7 +26,7 @@ func add_player(json):
 	players[json["id"]] = player
 	player.health_bar.set_health(json["health"])
 	var color_array = json["color"]
-	player.modulate(Color(color_array[0], color_array[1], color_array[2]))
+	player.modulate = (Color(color_array[0], color_array[1], color_array[2]))
 	var position_array = json["position"]
 	player.position = Vector2(position_array[0], position_array[1])
 	
