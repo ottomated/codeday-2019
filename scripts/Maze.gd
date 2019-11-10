@@ -168,6 +168,27 @@ func convert_to_pos(x, y, n):
 	return sum
 
 func make_exit():
+<<<<<<< HEAD
+	var perimeter = 2 * (width + height) - 4
+	var random = ((randi() % 89089) + 7986) % perimeter
+	var x = 0
+	var y = 0
+	if (random <= width):
+		x = random
+		y = 1
+	elif (random <= width + height - 1):
+		x = width
+		y = random - width
+	elif (random <= 2 * width + height - 2):
+		x = perimeter - height - random
+		y = height
+	else:
+		x = 1
+		y = perimeter - random
+	if Map.get_cellv(Vector2(x, y)) == 15:
+		make_exit()
+	else:
+		return Vector2(x, y)
 #	var perimeter = 2 * (width + height) - 4
 #	var random = ((randi() % 89089) + 7986 + a) % perimeter
 #	var x = 0

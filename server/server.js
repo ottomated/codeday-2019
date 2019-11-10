@@ -31,29 +31,32 @@ wss.on('connection', function connection(ws, req) {
 					}
 				});
 				break;
-				case "player_damage":
-					state.players[json.id].health = json.health;
-					wss.clients.forEach(c => {
-						if (c != ws) {
-							c.send(JSON.stringify({
-								type: "update_player_health",
-								id: player.id,
-								health: json.health
-							}));
-						}
-					});
-					break;
+			case "player_damage":
+				state.players[json.id].health = json.health;
+				wss.clients.forEach(c => {
+					if (c != ws) {
+						c.send(JSON.stringify({
+							type: "update_player_health",
+							id: player.id,
+							health: json.health
+						}));
+					}
+				});
+				break;
 			case "player_dash":
-					wss.clients.forEach(c => {
-						if (c != ws) {
-							c.send(JSON.stringify({
-								type: "player_dash",
-								id: json.id,
-								direction: json.direction
-							}));
-						}
-					});
-					break;
+				for (let enemy of json.killed_enemies) {
+					state.removeEnemy(enemy);
+				}
+				wss.clients.forEach(c => {
+					if (c != ws) {
+						c.send(JSON.stringify({
+							type: "player_dash",
+							id: json.id,
+							direction: json.direction
+						}));
+					}
+				});
+				break;
 			case "add_trap":
 				let trap = new Trap(json.trap_type);
 				trap.position = json.position;
@@ -69,13 +72,30 @@ wss.on('connection', function connection(ws, req) {
 						}));
 					}
 				});
+				break;
+			case "spawn_points":
+				if (state.spawnPoints.length === 1) {
+					state.spawnPoints = json.points.map(p => {
+						let l = p.substring(1, p.length - 1);
+						return l.split(', ').map(n => parseInt(n));
+					});
+					setInterval(() => {
+						console.log(state.enemies.length + " enemies")
+						if (state.enemies.length < 1000) {
+							state.spawnEnemy();
+						}
+					}, 100);
+				}
+				break;
 		}
 	});
+	console.log(req.url);
 	if (req.url === '/vr') {
 		ws.send(JSON.stringify(Object.assign(state.getState(), {
 			type: "initialize"
 		})));
 	} else {
+		console.log(`New Player Connection`);
 		ws.on('close', () => {
 			state.removePlayer(player);
 		});
